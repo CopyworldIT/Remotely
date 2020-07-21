@@ -172,6 +172,9 @@
     <Resource Include="Remotely_Icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="copyworld-toshiba.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
