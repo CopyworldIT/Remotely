@@ -104,7 +104,7 @@ if ((Test-Path -Path "$Root\Agent\bin\Release\netcoreapp3.1\linux-x64\publish") 
 # Publish Core clients.
 dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime win-x64 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\win10-x64\publish" "$Root\Agent"
 dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime linux-x64 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\linux-x64\publish" "$Root\Agent"
-dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime win-x86 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\win10-x86\publish" "$Root\Agent"
+dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime win --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\win10-x86\publish" "$Root\Agent"
 
 New-Item -Path "$Root\Agent\bin\Release\netcoreapp3.1\win10-x64\publish\ScreenCast\" -ItemType Directory -Force
 New-Item -Path "$Root\Agent\bin\Release\netcoreapp3.1\win10-x86\publish\ScreenCast\" -ItemType Directory -Force
@@ -119,7 +119,7 @@ dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion -p:Publ
 
 
 # Publish Windows ScreenCaster (32-bit)
-dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion -p:PublishProfile=win-x86 --configuration Release "$Root\ScreenCast.Win"
+dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion -p:PublishProfile=win --configuration Release "$Root\ScreenCast.Win"
 
 # Publish Windows ScreenCaster (64-bit)
 dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion -p:PublishProfile=win-x64 --configuration Release "$Root\ScreenCast.Win"
