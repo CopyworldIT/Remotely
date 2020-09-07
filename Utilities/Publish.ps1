@@ -3,18 +3,19 @@
    Publishes the Remotely clients.
 .DESCRIPTION
    Publishes the Remotely clients.
-   To deploy the server, supply the following arguments: -rid win10-x64 -outdir path\to\dir -hostname https://mysite.mydomain.com
+   To deploy the server, supply the following arguments: -srid linux-x64 -outdir path\to\dir -hostname https://mysite.mydomain.com
 .COPYRIGHT
    Copyright 2020 Translucency Software.  All rights reserved.
 .EXAMPLE
    Run it from the Utilities folder (located in the solution directory).
-   Or run "powershell -f Publish.ps1 -rid win10-x64 -outdir path\to\dir -hostname https://mysite.mydomain.com
+   Or run "powershell -f Publish.ps1 -srid linux-x64 -outdir path\to\dir -hostname https://mysite.mydomain.com
 #>
 
 param (
 	[string]$OutDir = "",
     # RIDs are described here: https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
-	[string]$RID = "",
+	[string]$sRID = "",
+    [string]$cRID = "",
 	[string]$Hostname = "",
 	[string]$CertificatePath = "",
     [string]$CertificatePassword = ""
@@ -101,9 +102,9 @@ if ((Test-Path -Path "$Root\Agent\bin\Release\netcoreapp3.1\linux-x64\publish") 
 
 
 # Publish Core clients.
-dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime win10-x64 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\win10-x64\publish" "$Root\Agent"
+dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime win-x64 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\win10-x64\publish" "$Root\Agent"
 dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime linux-x64 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\linux-x64\publish" "$Root\Agent"
-dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime win10-x86 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\win10-x86\publish" "$Root\Agent"
+dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime win-x86 --configuration Release --output "$Root\Agent\bin\Release\netcoreapp3.1\win10-x86\publish" "$Root\Agent"
 
 New-Item -Path "$Root\Agent\bin\Release\netcoreapp3.1\win10-x64\publish\ScreenCast\" -ItemType Directory -Force
 New-Item -Path "$Root\Agent\bin\Release\netcoreapp3.1\win10-x86\publish\ScreenCast\" -ItemType Directory -Force
@@ -190,12 +191,12 @@ Move-Item -Path "$PublishDir\Remotely-Linux.zip" -Destination "$Root\Server\wwwr
 
 
 
-if ($RID.Length -gt 0 -and $OutDir.Length -gt 0) {
+if ($sRID.Length -gt 0 -and $OutDir.Length -gt 0) {
     if ((Test-Path -Path $OutDir) -eq $false){
         New-Item -Path $OutDir -ItemType Directory
     }
-    dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime $RID --configuration Release --output $OutDir "$Root\Server\"
+    dotnet publish /p:Version=$CurrentVersion /p:FileVersion=$CurrentVersion --runtime $sRID --configuration Release --output $OutDir "$Root\Server\"
 }
 else {
-    Write-Host "`r`nSkipping server deployment.  Params -outdir and -rid not specified." -ForegroundColor DarkYellow
+    Write-Host "`r`nSkipping server deployment.  Params -outdir and -srid not specified." -ForegroundColor DarkYellow
 }
