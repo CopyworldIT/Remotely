@@ -6,25 +6,39 @@
     var registrationAvailable = AppConfig.MaxOrganizationCount < 0 || organizationCount < AppConfig.MaxOrganizationCount;
 }
 
+
 <div class="text-center mt-5" style="margin-bottom:150px">
     <h1 id="remotelyHeader">
     </h1>
     <div class="lead">
         Welcome.  Looking for help?
     </div>
-    <div class="mt-5">
-        <a href="~/Downloads/Win-x86/Remotely_Desktop.exe" class="btn btn-primary btn-lg">
-            Download for Windows
-        </a>
-        <!-- @if (registrationAvailable)
-        {
-            <br />
-            <br />
-            <a href="~/Identity/Account/Register" class="btn btn-secondary btn-lg">
-                Register
-            </a>
-        } -->
-    </div>
+    <p id="download_button"></p>
+ 
 </div>
 
+<script runon="client">
+    document.getElementById("download_button").innerHTML = "This is a test!";
+    void Page_Load(Object Sender, EventArgs e)
+    {
+        CheckBrowserCaps();
+    }
+
+    void CheckBrowserCaps()
+    {
+        document.getElementById("download_button").innerHTML = "This is a test!";
+        System.Web.HttpBrowserCapabilities myBrowserCaps = Request.Browser;
+        if (((System.Web.Configuration.HttpCapabilitiesBase)myBrowserCaps).Win16)
+        {
+            var X86 = true;
+            document.getElementById("download_button").innerHTML = '<div class="mt-5"><a href = "~/Downloads/Win-x86/Remotely_Desktop.exe" class="btn btn-primary btn-lg" >Download for Windows</a></div >';
+        }
+        else
+        {
+            var X86 = false;
+            document.getElementById("download_button").innerHTML = '<div class="mt-5"><a href = "~/Downloads/Win-x64/Remotely_Desktop.exe" class="btn btn-primary btn-lg" >Download for Windows</a></div >';
+
+        }
+    }
+</script>
 <script type="module" src="~/scripts/Pages/IndexNotLoggedIn.js"></script>
